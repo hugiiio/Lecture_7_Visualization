@@ -483,9 +483,54 @@ weather_df %>%
 TRIE~"" is best practice cto tell R to put "" for missing values.
 tabyl creates a 2X2
 
+##General summary
+You can do lots of summaries, 
+```{r}
+weather_df %>% 
+  group_by(name, month) %>% 
+  summarize(
+    mean_tamx = mean(tmax, na.rm = TRUE),
+    mean_prcp = mean(prcp, na.rm = TRUE),
+    median_tmin = median(tmin, na.rm = TRUE)
+  )            
+```
 
+^
+this is a data frame. 
+We can put it directly into ggplot
 
+```{r}
 
+weather_df %>% 
+  group_by(name, month) %>% 
+  summarize(
+    mean_tmax = mean(tmax, na.rm = TRUE),
+    mean_prcp = mean(prcp, na.rm = TRUE),
+    median_tmin = median(tmin, na.rm = TRUE)
+  )   %>% 
+  ggplot(aes(x = month, y = mean_tmax, color = name)) +
+  geom_point() +
+  geom_line()
+```
 
+multiple summaires, suppose you want to smmrize many columns at the same time 
 
+```{r}
+
+weather_df %>% 
+  group_by(name, month) %>% 
+  summarize(across(prcp:tmin, mean))
+```
+Reminder, sometimes your result is eaiser to read in another format
+```{r}
+
+weather_df %>% 
+  group_by(name, month) %>% 
+  summarize(mean_tmax = mean(tmax)) %>% 
+  pivot_wider(
+    names_from = name,
+    values_from = mean_tmax
+  ) %>% 
+  knitr::kable(digits =1)
+```
 
