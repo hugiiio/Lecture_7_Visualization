@@ -395,3 +395,5 @@ weather_df %>%
   viridis::scale_fill_viridis(discrete = TRUE)
 ```
 
+Letcure about EDA
+
