@@ -460,12 +460,28 @@ other helpful counters
 weather_df %>% 
   group_by(month) %>% 
   summarize(
-    n_obs=n(),
+    n_obs = n(),
   n_days = n_distinct(date)
   )
   
 ```
 
+A digression on 2X2 tables
+
+```{r}
+weather_df %>% 
+  filter(name != "Waikiki_HA") %>% 
+  mutate(
+    cold = case_when(
+      tmax < 5 ~ "cold",
+      tmax >= 5 ~"not_cold",
+      TRUE  ~ ""
+    )) %>% 
+  janitor::tabyl(name, cold)
+  
+```
+TRIE~"" is best practice cto tell R to put "" for missing values.
+tabyl creates a 2X2
 
 
 
