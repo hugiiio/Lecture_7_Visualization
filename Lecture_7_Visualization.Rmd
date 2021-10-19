@@ -570,4 +570,5 @@ weather_df %>%
   )
   
 ```
-
+##quick notes, 
+summarize only get you so far
